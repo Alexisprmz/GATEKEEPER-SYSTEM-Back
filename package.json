@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "es mi proyecto de practica para aprender PERN",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "author": "Alexis Espinosa",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "pg": "^8.20.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexisprmz/Examen-II-Guitarras-Back.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Alexisprmz/Examen-II-Guitarras-Back/issues"
+  },
+  "homepage": "https://github.com/Alexisprmz/Examen-II-Guitarras-Back#readme"
+}
