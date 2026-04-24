@@ -7,23 +7,23 @@ const routerAcceso = Router()
 
 routerAcceso.post(
   '/solicitar-acceso',
-  body('email').isEmail().withMessage('Debe ser un email válido'),
-  body('folio').notEmpty().withMessage('El folio no puede ir vacío'),
+  body('email').isEmail().withMessage('Debe ser un email valido'),
+  body('folio').notEmpty().withMessage('El folio no puede ir vacio'),
   handlerInputErrors,
   solicitarAcceso
 )
 
 routerAcceso.get(
   '/verificar-estatus/:email',
-  param('email').isEmail().withMessage('Debe ser un email válido'),
+  param('email').isEmail().withMessage('Debe ser un email valido'),
   handlerInputErrors,
   verificarEstatus
 )
 
 routerAcceso.patch(
-  '/solicitudes/:email/estatus',
-  param('email').isEmail().withMessage('Debe ser un email válido'),
-  body('estatus').notEmpty().withMessage('El estatus no puede ir vacío'),
+  '/solicitudes/estatus',
+  body('email').isEmail().withMessage('Debe ser un email valido'),
+  body('estatus').notEmpty().withMessage('El estatus no puede ir vacio'),
   handlerInputErrors,
   actualizarEstatus
 )

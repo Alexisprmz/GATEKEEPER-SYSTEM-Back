@@ -4,7 +4,7 @@
   "description": "es mi proyecto de practica para aprender PERN",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts",
+    "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js"
   },
