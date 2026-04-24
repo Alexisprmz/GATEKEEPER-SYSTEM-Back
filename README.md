@@ -1,105 +1,43 @@
-# GuitarLA — Backend API REST
+# Access Portal API
 
-> Servicio web RESTful construido sobre **Node.js**, **Express** y **PostgreSQL**. Actúa como núcleo de datos del ecosistema GuitarLA, exponiendo recursos de guitarras a través de una interfaz HTTP estandarizada.
+Backend robusto construido con **Node.js**, **Express** y **TypeScript**. Se encarga de gestionar las solicitudes de acceso, validar folios mediante un flujo con **n8n** y persistir los datos en **PostgreSQL/MySQL** vía **Sequelize**.
 
----
+## Tecnologías
+* **Runtime:** Node.js + TypeScript
+* **Framework:** Express
+* **ORM:** Sequelize
+* **Validación:** Express-validator
+* **Automatización:** Integración con n8n Webhooks
 
-##  Stack del Servidor
+## 🛠️ Instalación y Configuración
 
-| Capa | Tecnología |
-|------|-----------|
-| Entorno de ejecución | Node.js + TypeScript |
-| Framework HTTP | Express.js |
-| Acceso a datos | Sequelize ORM |
-| Motor de base de datos | PostgreSQL (Render) |
-| Política de acceso | CORS habilitado |
+1.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
 
----
+2.  **Variables de Entorno:**
+    Crea un archivo `.env` en la raíz con lo siguiente:
+    ```env
+    PORT=4000
+    DATABASE_URL=postgres://usuario:password@localhost:5432/nombre_db
+    N8N_WEBHOOK_URL=[https://tu-instancia.n8n.cloud/webhook/solicitud](https://tu-instancia.n8n.cloud/webhook/solicitud)
+    ```
 
-##  Antes de Comenzar
+3.  **Scripts disponibles:**
+    * `npm run dev`: Inicia el servidor en modo desarrollo con recarga automática (nodemon).
+    * `npm run build`: Compila el código TypeScript a JavaScript.
 
-Asegúrate de contar con lo siguiente:
+## Endpoints Principales
 
-- **Node.js** v18 o superior instalado en tu máquina.
-- **npm** disponible como gestor de paquetes.
-- Una instancia de **PostgreSQL** activa, ya sea local o alojada en Render.
+| Método | Ruta | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `/api/solicitar-acceso` | Crea/Actualiza solicitud y dispara el Webhook a n8n. |
+| `GET` | `/api/verificar-estatus/:email` | Polling endpoint para consultar el estado actual. |
+| `PATCH` | `/api/solicitudes/actualizar-estatus` | Endpoint seguro para que n8n actualice a 'Aceptado' o 'Rechazado'. |
 
----
-
-##  Puesta en Marcha
-
-### 1. Obtener el código
-
-```bash
-git clone <url-del-repo>
-cd Examen-II-Guitarras-Back
-```
-
-### 2. Instalar paquetes
-
-```bash
-npm install
-```
-
-### 3. Configurar variables de entorno
-
-Crea un archivo `.env` en la raíz del proyecto:
-
-```env
-DATABASE_URL=postgresql://usuario:contraseña@host/nombre_db
-```
-
-> Base de datos en **Render**, ve al dashboard y copia el valor de **External Database URL**.
-
-### 4. Preparar la base de datos
-
-Ejecuta el siguiente script SQL para crear la tabla necesaria:
-
-```sql
-CREATE TABLE guitarra (
-    id          SERIAL        PRIMARY KEY,
-    nombre      VARCHAR(100)  NOT NULL,
-    descripcion TEXT          NOT NULL,
-    precio      INTEGER       NOT NULL,
-    img         VARCHAR(255)  NOT NULL
-);
-```
-
-### 5. Iniciar el servidor
-
-```bash
-npm run dev
-```
-
- El servidor quedará escuchando en: `http://localhost:4000`
-
----
-
-## Mapa de Endpoints
-
-La API expone los siguientes endpoints desde la ruta `(http://localhost:4000/api/guitarras)`:
-
-| Verbo HTTP | Ruta | Acción |
-|-----------|------|--------|
-| `GET` | `/api/guitarras` | Listar todas las guitarras |
-| `GET` | `/api/guitarras/:id` | Consultar una guitarra por ID |
-| `POST` | `/api/guitarras` | Registrar una nueva guitarra |
-| `PUT` | `/api/guitarras/:id` | Modificar una guitarra existente |
-| `DELETE` | `/api/guitarras/:id` | Dar de baja una guitarra |
-
-### Body para insertar guitarras en la base de datos.
-
-```json
-{
-  "nombre": "Hazel",
-  "descripcion": "Morbi ornare augue nisl, vel elementum dui mollis vel. Curabitur non ex id eros fermentum hendrerit.",
-  "precio": 379,
-  "img": "guitarra_12"
-}
-```
-
-
----
-
-> Este servicio fue diseñado para integrarse directamente con el frontend **GuitarLA React**, aunque puede consumirse desde cualquier cliente HTTP.
-"# GATEKEEPER-SYSTEM-Back" 
+## Logs de Consola
+El backend incluye un sistema de trazabilidad detallado. Podrás monitorear en tiempo real:
+* Payloads entrantes de n8n.
+* Errores de validación de correo institucional.
+* Intentos de duplicidad de folios.
